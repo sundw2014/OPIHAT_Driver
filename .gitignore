@@ -1,3 +1,6 @@
+Debug/
+Release/
+
 # Prerequisites
 *.d
 
@@ -31,3 +34,5 @@
 *.out
 *.app
 
+/Debug/
+/Release/

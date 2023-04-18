@@ -25,7 +25,11 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "motor.h"
+#include "servo.h"
+#include "communicate.h"
+#include "battery_monitor.h"
+#include <stdio.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -56,7 +60,33 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+#define UPDATE_PERIOD 1000
+#define WATCHDOG_PERIOD 1000
+#define CONTROL_PERIOD 100
 
+uint32_t last_control = 0, last_send = 0;
+
+void fail_safe(){
+    for(int i=0;i<4;i++){
+        motors[i] = 0;
+    }
+}
+
+void do_tasks(){
+//	printf("do_tasks\r\n");
+    if(HAL_GetTick() > last_send + UPDATE_PERIOD){
+        last_send = HAL_GetTick();
+        update_status();
+    }
+    if(HAL_GetTick() > last_recv + WATCHDOG_PERIOD){
+        fail_safe();
+    }
+    if(HAL_GetTick() > last_control + CONTROL_PERIOD){
+        last_control = HAL_GetTick();
+        set_motors(motors);
+        set_servos(servos);
+    }
+}
 /* USER CODE END 0 */
 
 /**
@@ -95,7 +125,11 @@ int main(void)
   MX_UART4_Init();
   MX_UART5_Init();
   /* USER CODE BEGIN 2 */
-
+  start_battery_monitor();
+  HAL_TIM_Base_Start(&htim1);
+  HAL_TIM_Base_Start(&htim2);
+  HAL_TIM_Base_Start(&htim4);
+  HAL_TIM_Base_Start_IT(&htim5);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -103,7 +137,6 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
