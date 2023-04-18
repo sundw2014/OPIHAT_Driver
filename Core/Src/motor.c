@@ -1,5 +1,6 @@
 #include "main.h"
 #include "tim.h"
+#include <stdio.h>
 
 void set_motor_speed(int motor_ID, int16_t speed){
   GPIO_PinState IN1, IN2;

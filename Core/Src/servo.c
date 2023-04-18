@@ -1,5 +1,6 @@
 #include "main.h"
 #include "tim.h"
+#include <stdio.h>
 
 void set_servo_position(int servo_ID, uint16_t position){
   // positon: 1000 - 2000

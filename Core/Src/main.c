@@ -125,6 +125,7 @@ int main(void)
   MX_UART5_Init();
   /* USER CODE BEGIN 2 */
   start_battery_monitor();
+  start_cmd_receive();
   HAL_TIM_Base_Start(&htim1);
   HAL_TIM_Base_Start(&htim2);
   HAL_TIM_Base_Start(&htim4);
