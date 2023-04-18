@@ -60,7 +60,7 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-#define UPDATE_PERIOD 1000
+#define UPDATE_PERIOD 300
 #define WATCHDOG_PERIOD 1000
 #define CONTROL_PERIOD 100
 
@@ -73,7 +73,6 @@ void fail_safe(){
 }
 
 void do_tasks(){
-//	printf("do_tasks\r\n");
     if(HAL_GetTick() > last_send + UPDATE_PERIOD){
         last_send = HAL_GetTick();
         update_status();
@@ -137,6 +136,7 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
+
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */

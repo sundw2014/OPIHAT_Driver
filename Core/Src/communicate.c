@@ -46,9 +46,7 @@ void communicate_recv(void)
 }
 
 void update_status(){
-	printf("ck1\r\n");
     float voltage = get_bat_status_voltage();
-	printf("ck2\r\n");
     float current = get_bat_status_current();
     printf("VBAT: %.2fV; CURRENT: %.2fA", voltage, current);
 }
