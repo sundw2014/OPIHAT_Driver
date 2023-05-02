@@ -20,6 +20,7 @@ uint32_t last_recv = 0;
 uint8_t cmd_buff[CMD_LEN];
 
 void start_cmd_receive(){
+	huart5.RxState = HAL_UART_STATE_READY;
 	HAL_UARTEx_ReceiveToIdle_IT(&huart5, cmd_buff, CMD_LEN);
 }
 
@@ -31,8 +32,8 @@ void parse_cmd(uint8_t *cmd){
 void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size){
 	if(Size == CMD_LEN){
 		parse_cmd(cmd_buff);
+	    last_recv = HAL_GetTick();
 	}
-    last_recv = HAL_GetTick();
     start_cmd_receive();
 }
 

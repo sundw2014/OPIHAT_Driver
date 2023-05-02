@@ -78,10 +78,12 @@ void do_tasks(){
         update_status();
     }
     if(HAL_GetTick() > last_recv + WATCHDOG_PERIOD){
-        fail_safe();
+      last_recv = HAL_GetTick();
+      fail_safe();
+      start_cmd_receive();
     }
     if(HAL_GetTick() > last_control + CONTROL_PERIOD){
-        last_control = HAL_GetTick();
+      last_control = HAL_GetTick();
         set_motors(motors);
         set_servos(servos);
     }
